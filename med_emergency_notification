@@ -1,0 +1,51 @@
+Option Compare Database
+Option Explicit
+
+Sub testing()
+Dim strTo, sendCC, strSubject, strBody As String
+
+strTo = kennelDistro()
+
+strTo = Right(strTo, Len(strTo) - 1)
+
+Debug.Print strTo
+
+End Sub
+
+Function getDistro(Optional ByVal strSQL As String = "SELECT * FROM tbl_contact_data") As String
+
+Dim rs As Recordset
+Dim myList As String
+
+
+myList = ""
+
+
+Set rs = getRecordSet(strSQL)
+
+rs.MoveFirst
+
+Do Until rs.EOF
+    
+    myList = myList & ";" & rs![Email]
+    
+    rs.MoveNext
+    
+Loop
+
+getDistro = myList
+
+End Function
+
+
+Function getRecordSet(ByVal strSQL As String) As Recordset
+
+Dim db As Database
+
+Set db = CurrentDb
+
+Set getRecordSet = db.OpenRecordset(strSQL)
+
+
+
+End Function

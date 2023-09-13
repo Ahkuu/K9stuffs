@@ -1,0 +1,36 @@
+Option Compare Database
+Option Explicit
+
+Sub sendEmail(ByVal strTo As String, ByVal strSubject As String, ByVal strBody As String, Optional ByVal sendCC = "nothing")
+
+Dim objOutlook As Outlook.Application 'Creates a variable to store the outlook application inside of it/open outlook
+Dim objMail As Outlook.MailItem
+Dim courtesyCopy As Variant
+
+
+Set objOutlook = CreateObject("Outlook.Application")
+Set objMail = objOutlook.CreateItem(olMailItem)
+ 
+
+'Type in your email below
+'Example
+'Dim userSelection as a variable string as a lookup combo box on a form
+'strTo = "Capt Ford" and it is placed in text... but in this case you will need a Dlookup Function to find the email on the table. Ex.) Dlookup([email], "Name of Table", [Field Name/Contact] = "'" & UserVaraibleSelction "'") remember the quotes
+
+
+    With objMail
+        .To = strTo
+        If sendCC <> "nothing" Then
+            .CC = sendCC
+        End If
+        .Subject = strSubject
+        .Body = strBody
+        .Display
+    End With
+
+
+Set objOutlook = Nothing
+Set objMail = Nothing
+
+
+End Sub
